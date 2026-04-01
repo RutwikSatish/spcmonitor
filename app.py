@@ -81,9 +81,10 @@ def generate_process_data(n_subgroups=125, subgroup_size=5, seed=42):
     df["R_UCL"] = round(D4*r_bar,4)
     df["R_LCL"] = 0.0
     sigma_est = r_bar/d2
-    df["Cp"]  = round((usl-lsl)/(6*sigma_est),3)
-    df["Cpk"] = round(min((usl-df["Xbar_CL"])/(3*sigma_est),
-                          (df["Xbar_CL"]-lsl)/(3*sigma_est)),3)
+    cl_val = float(df["Mean"].mean())
+    df["Cp"]  = round((usl-lsl)/(6*sigma_est), 3)
+    df["Cpk"] = round(min((usl-cl_val)/(3*sigma_est),
+                          (cl_val-lsl)/(3*sigma_est)), 3)
     return df, pd.DataFrame(data), usl, lsl
 
 df, raw, USL, LSL = generate_process_data()
