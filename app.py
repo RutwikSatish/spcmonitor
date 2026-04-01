@@ -223,7 +223,7 @@ with tab2:
     df["p"] = df["Defects"] / n
     p_bar = df["p"].mean()
     df["p_UCL"] = p_bar + 3*np.sqrt(p_bar*(1-p_bar)/n)
-    df["p_LCL"] = (p_bar - 3*np.sqrt(p_bar*(1-p_bar)/n)).clip(lower=0)
+    df["p_LCL"] = max(p_bar - 3*np.sqrt(p_bar*(1-p_bar)/n), 0)
 
     fig_p = go.Figure()
     p_colors = ["#f85149" if v > df["p_UCL"].iloc[0] else "#58a6ff" for v in df["p"]]
